@@ -65,10 +65,10 @@ node {
           }
         stage('Apex Test') {
               if (isUnix()) {
-                   sh "mkdir -p ${RUN_ARTIFACT_DIR}"
+                  // sh "mkdir -p ${RUN_ARTIFACT_DIR}"
                     rc = sh returnStatus: true, script: "\"${toolbelt}\" force:apex:test:run --testlevel RunLocalTests --outputdir ${RUN_ARTIFACT_DIR} --resultformat tap --targetusername ${SFDC_USERNAME}"
               }else{
-                   bat "mkdir -p ${RUN_ARTIFACT_DIR}"
+                  // bat "mkdir -p ${RUN_ARTIFACT_DIR}"
                   rc = bat returnStatus: true, script: "\"${toolbelt}\" force:apex:test:run --testlevel RunLocalTests --outputdir ${RUN_ARTIFACT_DIR} --resultformat tap --targetusername ${SFDC_USERNAME}"
               }
             if (rc != 0) {
