@@ -66,10 +66,10 @@ node {
         stage('Apex Test') {
               if (isUnix()) {
                   // sh "mkdir -p ${RUN_ARTIFACT_DIR}"
-                    rc = sh returnStatus: true, script: "\"${toolbelt}\" force:apex:test:run --testlevel RunLocalTests --outputdir ${RUN_ARTIFACT_DIR} --resultformat tap --targetusername ${SFDC_USERNAME}"
+                    rc = sh returnStatus: true, script: "\"${toolbelt}\" sfdx force:apex:test:run --synchronous"
               }else{
                   // bat "mkdir -p ${RUN_ARTIFACT_DIR}"
-                  rc = bat returnStatus: true, script: "\"${toolbelt}\" force:apex:test:run --testlevel RunLocalTests --outputdir ${RUN_ARTIFACT_DIR} --resultformat tap --targetusername ${SFDC_USERNAME}"
+                  rc = bat returnStatus: true, script: "\"${toolbelt}\" sfdx force:apex:test:run --synchronous"
               }
             if (rc != 0) {
                 error 'Apex Test failed'
