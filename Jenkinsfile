@@ -11,7 +11,7 @@ node {
     def JWT_KEY_CRED_ID = env.JWT_CRED_ID_DH
     def CONNECTED_APP_CONSUMER_KEY=env.CONNECTED_APP_CONSUMER_KEY_DH
 
-    def HUB_ORG_QA='amit.salesforce21@gmail.com.kt'
+    def HUB_ORG_QA='bganguly1984002@gmail.com'
     def CONNECTED_APP_CONSUMER_KEY_QA=' '
     
     println 'KEY IS' 
