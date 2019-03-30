@@ -21,7 +21,7 @@ node {
     println CONNECTED_APP_CONSUMER_KEY
     def toolbelt = tool 'toolbelt'
 
-    if (env.BRANCH_NAME == 'master') {
+  
         stage('checkout source') {
             // when running in multi-branch job, one must issue this command
             checkout scm
@@ -49,7 +49,7 @@ node {
                 println('Hello from a Job DSL script!')
                 println(rmsg)
             }
-        }
+        
     }
     else if(env.BRANCH_NAME.startsWith('PR-')) {
         stage('checkout source') {
