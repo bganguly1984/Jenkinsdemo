@@ -51,7 +51,7 @@ node {
             }
         
     }
-    else if(env.BRANCH_NAME.startsWith('PR-')) {
+    if(env.BRANCH_NAME.startsWith('PR-')) {
         stage('checkout source') {
             // when running in multi-branch job, one must issue this command
             checkout scm
@@ -84,4 +84,4 @@ node {
     }
     
 }
-\
+
