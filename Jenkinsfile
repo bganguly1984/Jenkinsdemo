@@ -1,12 +1,3 @@
-import groovyx.net.http.HTTPBuilder
-import groovyx.net.http.HttpResponseException
-import static groovyx.net.http.ContentType.URLENC
-import static groovyx.net.http.Method.POST
-import static groovyx.net.http.Method.GET
-import static groovyx.net.http.ContentType.JSON
-
-
-
 def sf_login_domain = 'https://login.salesforce.com/'
 def instance_domain
 def access_token = ''
