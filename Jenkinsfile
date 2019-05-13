@@ -16,7 +16,7 @@ def consumer_key = '3MVG9xOCXq4ID1uHgHyftKXbMPvrbqnT7q5EgZvKZo5wzclEZE54KUZ_7K8t
 def consumer_secret	= '1E8C9F7D96541CC63659DD141E1F34F28C1A9C5B536A01C70D5D689B25DEDE49'
 def auth_username = 'bhaskar@ganguly.dev'
 def auth_password = 'Oct@2018'
-def auth_security_token = 'securityToken'
+def auth_security_token = 'mQhSASjCZVoRl1yhd9cz9s7B'
 
 /*
 curl https://test.salesforce.com/services/oauth2/token -d "grant_type=password" -d "client_id=consumer_key" -d "client_secret=consumer_secret" -d "username=username@domain.com" -d "password=passwordSecurityToken" 
