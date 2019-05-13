@@ -5,9 +5,7 @@ import static groovyx.net.http.Method.POST
 import static groovyx.net.http.Method.GET
 import static groovyx.net.http.ContentType.JSON
 
-@Grapes(
-  @Grab(group='org.codehaus.groovy.modules.http-builder', module='http-builder', version='0.6')
-)
+
 
 def sf_login_domain = 'https://login.salesforce.com/'
 def instance_domain
