@@ -1,0 +1,237 @@
+stage('Build dynamic Package.xml')
+		{
+			   
+					 steps{
+							script{
+								string firstcomm = false
+								firstcomm = "${firstcommit}"
+								//println 'this is'+firstcomm
+								if(firstcomm !='Yes')
+								{
+								   dir(LOCAL_PATH){
+									   string fromcommit = "${fromcommit}"
+									   string tocommit ="${tocommit}"
+									   def metaItems=''
+									   
+									   
+									   if ((fromcommit!=null && fromcommit.length()>0)||(tocommit!=null && tocommit.length()>0)) {
+										//echo "i am in not null"
+									   metaItems =sh(returnStdout: true, script: 'git diff '+ fromcommit +' '+ tocommit +' --name-only>details.txt').trim()
+									   }
+									   else
+										   {
+										//	 echo "i am in null"
+											 metaItems =sh(returnStdout: true, script: 'git diff HEAD^ --name-only>details.txt').trim()
+										   }
+									   sh 'cat details.txt'
+									  // sh 'which details.txt'
+									  String contents = readFile file:'details.txt'
+									 // println contents;
+									  List<String> auralist = new ArrayList<String>();
+									  List<String> lwclist  =  new ArrayList<String>();
+									  List<String> auralistname = new ArrayList<String>();
+									  List<String> sclass = new ArrayList<String>();
+									  List<String> sclassname = new ArrayList<String>();
+									  List<String> scomp = new ArrayList<String>();
+									  List<String> scompname = new ArrayList<String>();
+									  List<String> strigger = new ArrayList<String>();
+									  List<String> striggername = new ArrayList<String>();
+									  List<String> spage = new ArrayList<String>();
+									  List<String> spagename = new ArrayList<String>();
+									  List<String> stestsuit = new ArrayList<String>();
+									  List<String> stestsuitname = new ArrayList<String>();
+									  List<String> lwclistname = new ArrayList<String>();
+									  string storememaura=''
+									  string spp=''
+									  string saurabun=''
+									  string finals=''
+									  string storenamecls=''
+									  string sclsnamej=''
+									  string sapexclass=''
+									  string finalscls=''
+									  string storenametri=''
+									  string striggerj=''
+									  string striggernamep=''
+									  string finalstri=''
+									  string sapexpagename=''
+									  string spagen=''
+									  string sapexpage=''
+									  string finalspage=''
+									  string sapexcomponent=''
+									  string scompn=''
+									  string sapexcomponentname=''
+									  string finalscomp=''
+									  string sapextestsuitp=''
+									  string stestsu=''
+									  string sapextestsuitcomp=''
+									  string finalstestsu=''
+									  string spplwc =''
+									  string slwcbun=''
+									  string finalslwc=''
+									  string storelwc=''
+									  string sfinalst=''
+									  string subst=''
+									  if(contents!=null && contents.length()>0)
+									  {
+									  contents.split('\n').each {
+										  String bn = it.split('\\.').last()
+										  //println bn
+										  if(bn !='yaml' && bn !='txt')
+										  {
+										   string p= it.split('/').last()
+										 String ext = p.split('\\.').last()
+										 if(it.split('/').size()>3)
+										 {
+										  subst= it.split('/')[3]
+										 }
+										  if(subst=='aura')
+										  {
+											 string saura = it.split('/')[4]
+											// println(saura)
+											 auralist.add(saura)
+										  }
+										  if(subst=='lwc')
+											  {
+												 string slwc = it.split('/')[4]
+												 if(ext!='json')
+												 {
+												// println(slwc)
+												 lwclist.add(slwc)
+												 }
+											  }
+									   if(ext=='cls') {
+										  string cl=  p.split('\\.').first()
+										 sclass.add(cl)
+									   }
+									   if(ext=='trigger') {
+										   string tri=  p.split('\\.').first()
+										  strigger.add(tri)
+										}
+										if(ext=='page') {
+											string pp=  p.split('\\.').first()
+											spage.add(pp)
+										 }
+										 if(ext=='component') {
+											 string cp1=  p.split('\\.').first()
+											 scomp.add(cp1)
+										  }
+										  if(ext=='testSuite') {
+											  string ptestsuit=  p.split('\\.').first()
+											  stestsuit.add(ptestsuit)
+										   }
+									}
+									  }
+									  }
+									  else { error "No difference found"}
+									 //  println auralist.unique()
+									   if(auralist.size()>0)
+									   {
+									   for(String slistaura :auralist.unique())
+									   {
+										  storememaura= ('<members>'+slistaura+'</members>')
+										 
+										 auralistname.add(storememaura);
+									   }
+										spp= auralistname.join('\n')
+										saurabun = '<name>AuraDefinitionBundle</name>'
+										finals ='<types>'+'\n'+spp+'\n'+saurabun+'\n'+'</types>'
+									   }
+									   if(lwclist.size()>0)
+										   {
+										   for(String slistlwc :lwclist.unique())
+										   {
+											  storelwc= ('<members>'+slistlwc+'</members>')
+											 
+											 lwclistname.add(storelwc);
+										   }
+											spplwc= lwclistname.join('\n')
+											slwcbun = '<name>LightningComponentBundle</name>'
+											finalslwc ='<types>'+'\n'+spplwc+'\n'+slwcbun+'\n'+'</types>'
+										   }
+									  // println finalslwc
+									   if(sclass.size()>0)
+									   {
+									   for(String slistcls :sclass)
+										   {
+											  storenamecls= ('<members>'+slistcls+'</members>')
+											 
+											 sclassname.add(storenamecls);
+										   }
+											sclsnamej= sclassname.join('\n')
+											sapexclass = '<name>ApexClass</name>'
+											finalscls ='<types>'+'\n'+sclsnamej+'\n'+sapexclass+'\n'+'</types>'
+										  // println finalscls
+									   }
+										 if(strigger.size()>0)
+										 {
+										   for(String slisttri :strigger)
+											   {
+												  storenametri= ('<members>'+slisttri+'</members>')
+												 
+												 striggername.add(storenametri);
+											   }
+												striggerj= striggername.join('\n')
+												striggernamep = '<name>ApexTrigger</name>'
+												finalstri ='<types>'+'\n'+striggerj+'\n'+striggernamep+'\n'+'</types>'
+											  // println finalstri
+										 }
+										   if(spage.size()>0)
+										   {
+											   for(String sapexpage :spage)
+												   {
+													 sapexpagename= ('<members>'+sapexpage+'</members>')
+													 
+													 spagename.add(sapexpagename);
+												   }
+													spagen= spagename.join('\n')
+													sapexpage = '<name>ApexPage</name>'
+													finalspage ='<types>'+'\n'+spagen+'\n'+sapexpage+'\n'+'</types>'
+										   }
+												 //  println finalspage
+											if(scomp.size()>0)
+											 {
+												   for(String sapexcomp :scomp)
+													   {
+														  sapexcomponent= ('<members>'+sapexcomp+'</members>')
+														 
+														 scompname.add(sapexcomponent);
+													   }
+														scompn= scompname.join('\n')
+														sapexcomponentname = '<name>ApexComponent</name>'
+													   finalscomp ='<types>'+'\n'+scompn+'\n'+sapexcomponentname+'\n'+'</types>'
+													  // println finalscomp
+											 }
+											 if(stestsuit.size()>0)
+												 {
+													   for(String sapextestsuit :stestsuit)
+														   {
+															  sapextestsuitp= ('<members>'+sapextestsuit+'</members>')
+															 
+															 stestsuitname.add(sapextestsuitp);
+														   }
+															stestsu= stestsuitnam.join('\n')
+															sapextestsuitcomp = '<name>ApexTestSuite</name>'
+														   finalstestsu ='<types>'+'\n'+stestsu+'\n'+sapextestsuitcomp+'\n'+'</types>'
+														  // println finalscomp
+												 }
+											 
+										 sfinalst	='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'+'\n'+'<Package xmlns="http://soap.sforce.com/2006/04/metadata">'+finalscls+'\n'+finalstri+'\n'+finalspage+'\n'+finals+'\n'+finalscomp+'\n'+finalstestsu+'\n'+finalslwc+'\n'+'<version>45.0</version>'+'\n'+'</Package>'
+										string sfinalstr= sfinalst.replaceAll("(?m)^[ \t]*\r?\n", "");
+										dir('manifest'){
+										sh 'ls'
+										sh 'cp package.xml package.xml.old'
+										if(stestsuit.size()>0 || scomp.size()>0 || spage.size()>0 || strigger.size()>0 || sclass.size()>0 || lwclist.size()>0 || auralist.size()>0 )
+										{
+										writeFile file: "package.xml", text: sfinalstr
+										}
+										else {error "No difference found from previous commit"}
+										sh 'ls'
+										sh 'cat package.xml'
+										}
+									   }
+								  
+								  
+								}
+		}
+			   }
+		}
