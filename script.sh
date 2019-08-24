@@ -27,9 +27,9 @@ if [ -z "${d}" ] || [ -z "${b}" ] ; then
     usage
 fi
 
-cd "${b}"
-sfdx force:auth:sfdxurl:store -f "${d}"/source_url.txt -a sourceorg
-sfdx force:auth:sfdxurl:store -f "${d}"/target_url.txt -a targetorg
-sfdx force:mdapi:retrieve -r "${d}" -k "${d}"/manifest/package.xml -u sourceorg
+
+"${b}" force:auth:sfdxurl:store -f "${d}"/source_url.txt -a sourceorg
+"${b}" force:auth:sfdxurl:store -f "${d}"/target_url.txt -a targetorg
+"${b}" force:mdapi:retrieve -r "${d}" -k "${d}"/manifest/package.xml -u sourceorg
 unzip "${d}"/unpackaged.zip
-sfdx force:mdapi:deploy -d "${d}"/unpackaged -u targetorg -l RunLocalTests -w 20
+"${b}" force:mdapi:deploy -d "${d}"/unpackaged -u targetorg -l RunLocalTests -w 20
